@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dosa Delights</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffa502;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #5cb85c;
+        }
+
+        body {
+            background-color: #f8f5f0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile responsive navbar */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+        }
+
+        
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* About Section */
+        .about-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: #004e89;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6b35;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 60px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 60px;
+        }
+        
+        .team-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .team-member {
+            width: 250px;
+            text-align: center;
+            background-color: #f8f5f0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .team-member h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #ff6b35;
+        }
+        
+        .team-member p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Values Section */
+        .values-section {
+            padding: 60px 0;
+        }
+        
+        .values-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .value-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .value-icon {
+            font-size: 40px;
+            color: #ff6b35;
+            margin-bottom: 20px;
+        }
+        
+        .value-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #004e89;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2d3436;
+            color: rgb(255, 255, 255);
+            padding: 60px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Infinity<span>South</span></a>
+                <div class="mobile-toggle" id="mobileToggle">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="dosa-menu-page.html">Menu</a></li>
+                    <li><a href="dosa-company-about-us.html">About Us</a></li>
+                    <li><a href="checkout-page.html">Checkout</a></li>
+                    <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    <li>
+                        
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Our Story</h1>
+            <p>Serving authentic South Indian dosas with love since 2010</p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about-section container">
+        <h2 class="section-title">About Dosa Delights</h2>
+        
+        <div class="about-content">
+            <div class="about-image">
+                <img src="prep.webp" alt="Dosa Preparation">
+            </div>
+            <div class="about-text">
+                <h3>Our Journey</h3>
+                <p>Founded in 2025, Dosa Delights began as a small family-owned restaurant with a simple mission: to share the authentic flavors of South Indian cuisine with our community. What started as a modest eatery has now grown into a beloved destination for dosa enthusiasts.</p>
+                <p>Our Co-founder, Chef Ravi, learned the art of dosa-making from his grandmother in Chennai. After moving here, he noticed a lack of authentic South Indian options and decided to bring those cherished recipes to life.</p>
+            </div>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Philosophy</h3>
+                <p>At Dosa Delights, we believe that food is more than just sustenance—it's an experience that brings people together. Every dosa we serve is made with carefully sourced ingredients, traditional techniques, and a lot of love.</p>
+                <p>We're committed to sustainability and supporting local farmers whenever possible. Our spices are imported directly from India to ensure the most authentic flavor profiles, while our produce is sourced locally to maintain freshness and reduce our carbon footprint.</p>
+            </div>
+            <div class="about-image">
+                <img src="intr.webp" alt="Restaurant Interior">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section class="team-section container">
+        <h2 class="section-title">Meet Our Team</h2>
+        <div class="team-container">
+            <div class="team-member">
+                <img src="ravi.webp"Chef Ravi">
+                <h3>Chef Ravi</h3>
+                <p>Founder & Head Chef</p>
+                <p>With over 25 years of culinary experience, Chef Ravi brings authentic South Indian flavors to every dish.</p>
+            </div>
+            <div class="team-member">
+                <img src="pria.webp" alt="Priya">
+                <h3>Priya</h3>
+                <p>Restaurant Manager</p>
+                <p>Ensuring every customer leaves with a smile, Priya oversees our daily operations with passion and dedication.</p>
+            </div>
+            <div class="team-member">
+                <img src="anand.webp" alt="Chef Anand">
+                <h3>Chef Anand</h3>
+                <p>Sous Chef</p>
+                <p>A master of spices and traditional techniques, Anand helps maintain our high quality standards.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Values Section -->
+    <section class="values-section container">
+        <h2 class="section-title">Our Values</h2>
+        <div class="values-container">
+            <div class="value-card">
+                <div class="value-icon">★</div>
+                <h3>Authenticity</h3>
+                <p>We never compromise on traditional recipes and techniques, bringing you the true taste of South India.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">♥</div>
+                <h3>Community</h3>
+                <p>We believe in creating a welcoming space where friends and family can gather to enjoy good food and company.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">♻</div>
+                <h3>Sustainability</h3>
+                <p>From sourcing local ingredients to reducing waste, we strive to minimize our environmental impact.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Tasty Delights</h4>
+                    <p>Delivering delicious food with quality ingredients since JAN 2025 . Our mission is to satisfy your cravings with authentic flavors.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">f</a>
+                       
+                        <a href="https://www.linkedin.com/in/abhishek-k-a48a31320?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-icon">in</a>
+                        <a href="https://www.instagram.com/ako_obhishek/?utm_source=ig_web_button_share_sheet" class="social-icon">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dosa-menu-page.html">Menu</a></li>
+                        <li><a href="dosa-company-about-us.html">About Us</a></li>
+                        <li><a href="checkout-page.html">Checkout</a></li>
+                        <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li>123 Food Street, Infinity City</li>
+                        <li>+91 1234567890</li>
+                        <li>kkr1029384756@gmail.com</li>
+                        </ul>
+                        </div>
+                        </div>
+                        </div>
+                        </footer>
+                        <script>
+                            // Get the mobile toggle button and nav links elements
+                            const mobileToggle = document.getElementById('mobileToggle');
+                            const navLinks = document.getElementById('navLinks');
+                            
+                            // Add click event listener to toggle mobile menu
+                            mobileToggle.addEventListener('click', function() {
+                                // Toggle the 'active' class on nav links
+                                navLinks.classList.toggle('active');
+                                
+                                // Change the toggle icon based on menu state
+                                if (navLinks.classList.contains('active')) {
+                                    mobileToggle.innerHTML = '✕'; // Close icon
+                                } else {
+                                    mobileToggle.innerHTML = '☰'; // Menu icon
+                                }
+                            });
+                            
+                            // Close menu when clicking on a link (optional but recommended)
+                            const menuLinks = document.querySelectorAll('.nav-links a');
+                            menuLinks.forEach(link => {
+                                link.addEventListener('click', function() {
+                                    // Only take action if the menu is open (has active class)
+                                    if (navLinks.classList.contains('active')) {
+                                        navLinks.classList.remove('active');
+                                        mobileToggle.innerHTML = '☰';
+                                    }
+                                });
+                            });
+                        </script>
+</body>
+</html>

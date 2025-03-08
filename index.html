@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFINITY DOSAA | Home</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffa502;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #5cb85c;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile responsive navbar */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+        }
+
+
+        /* Hero Section with Slideshow */
+        .hero {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            max-width: 600px;
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .slide-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            animation: slideInLeft 1.2s ease forwards;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Categories Section */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-img {
+            height: 150px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-name {
+            padding: 15px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Featured Products */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .original-price {
+            font-size: 1rem;
+            text-decoration: line-through;
+            color: #95a5a6;
+        }
+
+        .rating {
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .product-action {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .add-to-cart:hover {
+            background-color: #ff5252;
+        }
+
+        .add-to-cart i {
+            margin-right: 5px;
+        }
+
+        .favorite {
+            background-color: transparent;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .favorite:hover {
+            transform: scale(1.2);
+        }
+
+           
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .categories {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background-color: white;
+                width: 100%;
+                height: calc(100vh - 80px);
+                flex-direction: column;
+                padding: 40px 0;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+                text-align: center;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .slide-content {
+                left: 30px;
+                bottom: 30px;
+            }
+            
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input, .newsletter-btn {
+                width: 100%;
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 400px;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Infinity<span>South</span></a>
+                <div class="mobile-toggle" id="mobileToggle">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="dosa-menu-page.html">Menu</a></li>
+                    <li><a href="dosa-company-about-us.html">About Us</a></li>
+                    <li><a href="checkout-page.html">Checkout</a></li>
+                    <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    <li>
+                        
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Slideshow -->
+    <section class="hero">
+        <div class="slideshow" id="slideshow">
+            <img src="real herro.webp" class="slide active" >
+                <div class="slide-content">
+                    <h2>Delicious Food Delivered to Your Doorstep</h2>
+                    <p>Enjoy our signature dishes with fresh ingredients and authentic flavors</p>
+                    <a href="dosa-menu-page.html" class="btn btn-primary">Order Now</a>
+                </div>
+               </section>
+
+    <!-- Categories Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Food Categories</h2>
+            <div class="categories">
+                <div class="category-card">
+                    <img src="masala dosa.jpg"class="product-img">
+                    <div class="category-name"><a href="dosa-menu-page.html">Masala Dosa</div></a>
+                </div>
+                <div class="category-card">
+                    <img src="idwd.jpeg"class="product-img">
+                    <div class="category-name"><a href="comming soon.html">Idli</div></a>
+                </div>
+                <div class="category-card">
+                    <img src="appam.jpeg"class="product-img">
+                    <div class="category-name"><a href="comming soon.html">Appam</div></a>
+                </div>
+                <div class="category-card">
+                    <img src="upma.jpeg"class="product-img">
+                    <div class="category-name"><a href="comming soon.html">Upma</div></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products">
+                <!--p1-->
+                <div class="product-card">
+                    <img src="masala dosa.jpg"class="product-img">
+                    <div class="discount-badge">-20%</div>
+                    <div class="product-info">
+                        <h3 class="product-name">Masala Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹89</span>
+                            <span class="original-price">₹100</span>
+                        </div>
+                         <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                                                    </div>
+                    </div>
+                </div>
+                <!--p2-->
+                <div class="product-card">
+                    <img src="rava dosa.jpg"class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">Rava Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹90</span>
+                        </div>
+                         <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                            </div>
+                    </div>
+                    <!--p3-->
+                </div>
+                <div class="product-card">
+                    <img src="neer dosa.jpg"class="product-img">
+                        <div class="discount-badge">-20%</div>
+                        <div class="product-info">
+                        <h3 class="product-name">Neer Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹90</span>
+                            <span class="original-price">₹120</span>
+                        </div>
+                         <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--p4-->
+                <div class="product-card">
+                    <img src="Chocolate Dosa.jpeg"class="product-img">
+                    
+                    <div class="product-info">
+                        <h3 class="product-name">Chocolate Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹110</span>
+                        </div>
+                        <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Best Sellers -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Sellers</h2>
+            <div class="products">
+                <!--p1-->
+                <div class="product-card">
+                    <img src="Spring Dosa.jpeg"class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">Spring Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹120</span>
+                        </div>
+                        
+                        <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                           
+                        </div>
+                    </div>
+                </div>
+                <!--p2-->
+                <div class="product-card">
+                    <img src="CD.jpeg"class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">Cheese Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹130</span>
+                        </div>
+                        
+                        <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--p3-->
+                <div class="product-card">
+                    <img src="Paneer Dosa.jpeg"class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">Paneer Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹125</span>
+                        </div>
+                        
+                        <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--p3-->
+                <div class="product-card">
+                    <img src="plain dosa.jpeg"class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-name">Sada Dosa</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹80</span>
+                        </div>
+                        
+                        <div class="product-action">
+                            <a href="dosa-menu-page.html"><button class="add-to-cart"> EXPLORE NOW</button></a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- futter -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Tasty Delights</h4>
+                    <p>Delivering delicious food with quality ingredients since JAN 2025 . Our mission is to satisfy your cravings with authentic flavors.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">f</a>
+                       
+                        <a href="https://www.linkedin.com/in/abhishek-k-a48a31320?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-icon">in</a>
+                        <a href="https://www.instagram.com/ako_obhishek/?utm_source=ig_web_button_share_sheet" class="social-icon">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dosa-menu-page.html">Menu</a></li>
+                        <li><a href="dosa-company-about-us.html">About Us</a></li>
+                        <li><a href="checkout-page.html">Checkout</a></li>
+                        <li><a href="dosa-company-contact-us.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li>123 Food Street, Infinity City</li>
+                        <li>+91 1234567890</li>
+                        <li>kkr1029384756@gmail.com</li>
+                        </ul>
+                        </div>
+                        </div>
+                        </div>
+                        </footer>
+                        <script>
+                            // Get the mobile toggle button and nav links elements
+                            const mobileToggle = document.getElementById('mobileToggle');
+                            const navLinks = document.getElementById('navLinks');
+                            
+                            // Add click event listener to toggle mobile menu
+                            mobileToggle.addEventListener('click', function() {
+                                // Toggle the 'active' class on nav links
+                                navLinks.classList.toggle('active');
+                                
+                                // Change the toggle icon based on menu state
+                                if (navLinks.classList.contains('active')) {
+                                    mobileToggle.innerHTML = '✕'; // Close icon
+                                } else {
+                                    mobileToggle.innerHTML = '☰'; // Menu icon
+                                }
+                            });
+                            
+                            // Close menu when clicking on a link (optional but recommended)
+                            const menuLinks = document.querySelectorAll('.nav-links a');
+                            menuLinks.forEach(link => {
+                                link.addEventListener('click', function() {
+                                    // Only take action if the menu is open (has active class)
+                                    if (navLinks.classList.contains('active')) {
+                                        navLinks.classList.remove('active');
+                                        mobileToggle.innerHTML = '☰';
+                                    }
+                                });
+                            });
+                        </script>
+                         </body>
+                        </html>

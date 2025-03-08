@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity South | Menu</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffa502;
+            --dark-color: #2c3e50;
+            --light-color: #f5f6fa;
+            --accent-color: #ff6b6b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-transform: capitalize;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile responsive navbar */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                display: none;
+                z-index: 10;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 10px 0;
+            }
+        }
+        
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+        
+        .menu-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .menu-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 0 0 auto;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .item-image {
+            height: 200px;
+            background-color: #ddd;
+            overflow: hidden;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-info {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .item-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .item-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+        
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .add-to-cart {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #f83232;
+        }
+        
+        footer {
+            background-color: #2d3436;
+            color: rgb(255, 255, 255);
+            padding: 60px 20px 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            color: #bdc3c7;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-column {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-btn {
+                flex: 1 1 calc(50% - 20px);
+                text-align: center;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Infinity<span>South</span></a>
+                <div class="mobile-toggle" id="mobileToggle">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dosa-menu-page.html" class="active">Menu</a></li>
+                    <li><a href="dosa-company-about-us.html">About Us</a></li>
+                    <li><a href="checkout-page.html">Checkout</a></li>
+                    <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    <li>
+                       
+                            <a class="cart-icon" onclick="window.location.href='checkout-page.html'">
+                                🛒
+                                <span class="cart-count" id="cartCount">0</span></a>
+                            </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <div class="menu-header">
+            <h1>Our Menu</h1>
+            <p>Explore our extensive range of authentic South Indian dosas</p>
+        </div>
+        
+        <div class="menu-filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="classic">Classic</button>
+            <button class="filter-btn" data-category="special">Special</button>
+            <button class="filter-btn" data-category="veggie">Veggie</button>
+            <button class="filter-btn" data-category="spicy">Spicy</button>
+        </div>
+        
+        <div class="menu-grid" id="menuGrid">
+            <!-- Menu items will be loaded here by JavaScript -->
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Infinity South</h4>
+                    <p>Delivering delicious food with quality ingredients since JAN 2025. Our mission is to satisfy your cravings with authentic flavors.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">f</a>
+                        <a href="https://www.linkedin.com/in/abhishek-k-a48a31320" class="social-icon">in</a>
+                        <a href="https://www.instagram.com/ako_obhishek/" class="social-icon">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dosa-menu-page.html">Menu</a></li>
+                        <li><a href="dosa-company-about-us.html">About Us</a></li>
+                        <li><a href="checkout-page.html">Checkout</a></li>
+                        <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li>123 Food Street, Infinity City</li>
+                        <li>+91 1234567890</li>
+                        <li>kkr1029384756@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 Infinity South. All rights reserved and memes.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Sample menu data
+        const menuItems = [
+            {
+                id: 1,
+                name: "Masala Dosa",
+                description: "Crispy rice crepe filled with spiced potato filling, served with sambar and chutney",
+                price: 89,
+                image: "masala dosa.jpg",
+                category: "classic"
+            },
+            {
+                id: 2,
+                name: "Sada Dosa",
+                description: "Traditional crispy rice crepe served with sambar and chutney",
+                price: 80,
+                image: "plain dosa.jpeg",
+                category: "classic"
+            },
+            {
+                id: 3,
+                name: "Mysore Masala Dosa",
+                description: "Dosa spread with spicy red chutney and filled with potato masala",
+                price: 199,
+                image: "MMD.jpeg",
+                category: "spicy"
+            },
+            {
+                id: 4,
+                name: "Rava Dosa",
+                description: "Crispy semolina crepe with onions and spices",
+                price: 90,
+                image: "rava dosa.jpg",
+                category: "special"
+            },
+            {
+                id: 5,
+                name: "Onion Dosa",
+                description: "Dosa topped with finely chopped onions and spices",
+                price: 90,
+                image: "OD.jpeg",
+                category: "veggie"
+            },
+            {
+                id: 6,
+                name: "Cheese Dosa",
+                description: "Dosa filled with melted cheese and spices",
+                price: 130,
+                image: "CD.jpeg",
+                category: "special"
+            },
+            {
+                id: 7,
+                name: "Ghee Roast Dosa",
+                description: "Extra crispy dosa made with ghee (clarified butter)",
+                price: 119,
+                image: "Ghee Roast Dosa.jpeg",
+                category: "classic"
+            },
+            {
+                id: 8,
+                name: "Paneer Dosa",
+                description: "Dosa filled with spiced cottage cheese filling",
+                price: 125,
+                image: "Paneer Dosa.jpeg",
+                category: "special"
+            },
+            {
+                id: 9,
+                name: "Spring Dosa",
+                description: "Dosa filled with stir-fried vegetables and spices",
+                price: 139,
+                image: "Spring Dosa.jpeg",
+                category: "veggie"
+            },
+            {
+                id: 10,
+                name: "Schezwan Dosa",
+                description: "Fusion dosa with spicy Schezwan sauce and vegetables",
+                price: 119,
+                image: "Schezwan Dosa.jpeg",
+                category: "spicy"
+            },
+            {
+                id: 11,
+                name: "Chocolate Dosa",
+                description: "Sweet dosa spread with chocolate sauce and nuts",
+                price: 110,
+                image: "Chocolate Dosa.jpeg",
+                category: "special"
+            },
+            {
+                id: 12,
+                name: "Paper Dosa",
+                description: "Extra thin and crispy dosa served with sambar and chutney",
+                price: 95,
+                image: "Paper Dosa.jpeg",
+                category: "classic"
+            }
+        ];
+        
+        // Cart data
+        let cart = [];
+        
+        // Initialize the page
+        function initPage() {
+            // Load all menu items initially
+            renderMenuItems(menuItems);
+            
+            // Load cart from localStorage if available
+            const savedCart = localStorage.getItem('dosaCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+            
+            // Set up event listeners for filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Filter items
+                    const category = this.getAttribute('data-category');
+                    filterItems(category);
+                });
+            });
+        }
+        
+        // Filter menu items
+        function filterItems(category) {
+            // Filter and render items
+            if (category === 'all') {
+                renderMenuItems(menuItems);
+            } else {
+                const filteredItems = menuItems.filter(item => item.category === category);
+                renderMenuItems(filteredItems);
+            }
+        }
+        
+        // Render menu items
+        function renderMenuItems(items) {
+            const menuGrid = document.getElementById('menuGrid');
+            menuGrid.innerHTML = '';
+            
+            items.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-description">${item.description}</div>
+                        <div class="item-footer">
+                            <div class="item-price">₹${item.price.toFixed(2)}</div>
+                            <button class="add-to-cart" data-id="${item.id}">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                menuGrid.appendChild(menuItem);
+            });
+            
+            // Add event listeners to "Add to Cart" buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    addToCart(itemId);
+                });
+            });
+        }
+        
+        // Add item to cart
+        function addToCart(itemId) {
+            const item = menuItems.find(item => item.id === itemId);
+            if (item) {
+                // Check if item is already in cart
+                const existingItem = cart.find(cartItem => cartItem.id === itemId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: 1
+                    });
+                }
+                
+                // Save cart to localStorage
+                localStorage.setItem('dosaCart', JSON.stringify(cart));
+                
+                // Update cart count
+                updateCartCount();
+                
+                // Show notification
+                alert(`${item.name} added to cart!`);
+            }
+        }
+        
+        // Update cart count
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            // Add click event listener to toggle mobile menu
+            mobileToggle.addEventListener('click', function() {
+                // Toggle the 'active' class on nav links
+                navLinks.classList.toggle('active');
+                
+                // Change the toggle icon based on menu state
+                if (navLinks.classList.contains('active')) {
+                    mobileToggle.innerHTML = '✕'; // Close icon
+                } else {
+                    mobileToggle.innerHTML = '☰'; // Menu icon
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const menuLinks = document.querySelectorAll('.nav-links a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Only take action if the menu is open (has active class)
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileToggle.innerHTML = '☰';
+                    }
+                });
+            });
+            
+            // Initialize the page
+            initPage();
+        });
+    </script>
+</body>
+</html>

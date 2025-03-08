@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dosa Delights | Checkout</title>
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #ffa502;
+            --dark-color: #2c3e50;
+             --light-color: #f5f6fa;
+            --accent-color: #ff6b6b;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile responsive navbar */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .page-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .cart-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+        }
+        
+        .cart-empty button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cart-empty button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+        
+        .item-price {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            margin: 0 1rem;
+        }
+        
+        .quantity-btn {
+            background-color: var(--light-color);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #ddd;
+        }
+        
+        .quantity-value {
+            margin: 0 0.5rem;
+            font-weight: bold;
+        }
+        
+        .item-total {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .remove-item {
+            color: #e74c3c;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .cart-summary {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--light-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .order-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .order-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .payment-options {
+            margin-bottom: 1.5rem;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .payment-option input {
+            margin-right: 0.5rem;
+        }
+        
+        .checkout-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #219653;
+        }
+        
+        .checkout-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        footer {
+            background-color: #2d3436;
+            color: rgb(255, 255, 255);
+            padding: 60px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-section, .order-section {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Infinity<span>South</span></a>
+                <div class="mobile-toggle" id="mobileToggle">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="dosa-menu-page.html">Menu</a></li>
+                    <li><a href="dosa-company-about-us.html">About Us</a></li>
+                    <li><a href="checkout-page.html" class="active">Checkout</a></li>
+                    <li><a href="dosa-company-contact-us.html">Contact Us</a></li>
+                    <li>
+                        <a class="cart-icon" onclick="window.location.href='checkout-page.html'">
+                            🛒
+                            <span class="cart-count" id="cartCount">0</span></a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <div class="page-title">
+            <h1>Checkout</h1>
+            <p>Complete your order and enjoy our delicious dosas</p>
+        </div>
+        
+        <div class="cart-section">
+            <h2>Your Order</h2>
+            
+            <div id="cartItems" class="cart-items">
+                <!-- Cart items will be loaded here by JavaScript -->
+            </div>
+            
+            <div id="cartSummary" class="cart-summary">
+                <!-- Cart summary will be loaded here by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="order-section">
+            <h2>Delivery Information</h2>
+            
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryTime">Preferred Delivery Time</label>
+                    <select id="deliveryTime" required>
+                        <option value="">Select a time</option>
+                        <option value="asap">As soon as possible</option>
+                        <option value="30min">Within 30 minutes</option>
+                        <option value="1hour">Within 1 hour</option>
+                        <option value="2hours">Within 2 hours</option>
+                    </select>
+                </div>
+                
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Payment Method</h3>
+                
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <input type="radio" id="paymentCash" name="paymentMethod" value="cash" checked>
+                        <label for="paymentCash">Cash on Delivery</label>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" id="paymentCard" name="paymentMethod" value="card">
+                        <label for="paymentCard">Credit/Debit Card</label>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <input type="radio" id="paymentUPI" name="paymentMethod" value="upi">
+                        <label for="paymentUPI">UPI</label>
+                    </div>
+                </div>
+                
+                <button type="submit" id="checkoutBtn" class="checkout-btn" disabled>
+                    Complete Order
+                </button>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Tasty Delights</h4>
+                    <p>Delivering delicious food with quality ingredients since JAN 2025 . Our mission is to satisfy your cravings with authentic flavors.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">f</a>
+                       
+                        <a href="https://www.linkedin.com/in/abhishek-k-a48a31320?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-icon">in</a>
+                        <a href="https://www.instagram.com/ako_obhishek/?utm_source=ig_web_button_share_sheet" class="social-icon">ig</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dosa-menu-page.html">Menu</a></li>
+                        <li><a href="dosa-company-about-us.html">About Us</a></li>
+                        <li><a href="checkout-page.html">Checkout</a></li>
+                        <li><a href="dosa-company-contact-us.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li>123 Food Street, Infinity City</li>
+                        <li>+91 1234567890</li>
+                        <li>kkr1029384756@gmail.com</li>
+                        </ul>
+                        </div>
+                        </div>
+                        </div>
+                        </footer>
+    
+    <script>
+        // Cart data
+let cart = [];
+
+// Constants for calculations
+const TAX_RATE = 0.09; // 9% tax
+const DELIVERY_FEE = 199; // Changed from 2.99 to 199 rupees
+
+// Initialize the page
+function initPage() {
+    // Load cart from localStorage
+    const savedCart = localStorage.getItem('dosaCart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+        
+        if (cart.length > 0) {
+            renderCartItems();
+            renderCartSummary();
+            document.getElementById('checkoutBtn').disabled = false;
+        } else {
+            showEmptyCart();
+            document.getElementById('checkoutBtn').disabled = true;
+        }
+    } else {
+        showEmptyCart();
+        document.getElementById('checkoutBtn').disabled = true;
+    }
+    
+    // Set up event listeners
+    document.getElementById('checkoutForm').addEventListener('submit', handleCheckout);
+}
+
+// Show empty cart message
+function showEmptyCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartSummary = document.getElementById('cartSummary');
+    
+    cartItems.innerHTML = `
+        <div class="cart-empty">
+            <p>Your cart is empty</p>
+            <button onclick="window.location.href='index.html'">Browse Menu</button>
+        </div>
+    `;
+    
+    cartSummary.innerHTML = '';
+}
+
+// Render cart items
+function renderCartItems() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    cartItemsContainer.innerHTML = '';
+    
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <div class="item-details">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">₹${item.price.toFixed(2)} each</div>
+            </div>
+            <div class="item-quantity">
+                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                <span class="quantity-value">${item.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+            </div>
+            <div class="item-total">₹${itemTotal.toFixed(2)}</div>
+            <div class="remove-item" onclick="removeItem(${item.id})">×</div>
+        `;
+        
+        cartItemsContainer.appendChild(itemElement);
+    });
+}
+
+// Render cart summary
+function renderCartSummary() {
+    const cartSummaryContainer = document.getElementById('cartSummary');
+    
+    // Calculate totals
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax + DELIVERY_FEE;
+    
+    cartSummaryContainer.innerHTML = `
+        <div class="summary-row">
+            <div>Subtotal</div>
+            <div>₹${subtotal.toFixed(2)}</div>
+        </div>
+        <div class="summary-row">
+            <div>Tax (${(TAX_RATE * 100).toFixed(0)}%)</div>
+            <div>₹${tax.toFixed(2)}</div>
+        </div>
+        <div class="summary-row">
+            <div>Delivery Fee</div>
+            <div>₹${DELIVERY_FEE.toFixed(2)}</div>
+        </div>
+        <div class="summary-row total">
+            <div>Total</div>
+            <div>₹${total.toFixed(2)}</div>
+        </div>
+    `;
+}
+
+// Update item quantity
+function updateQuantity(itemId, newQuantity) {
+    // Find the item in the cart
+    const itemIndex = cart.findIndex(item => item.id === itemId);
+    
+    if (itemIndex !== -1) {
+        // If quantity is zero or less, remove the item
+        if (newQuantity <= 0) {
+            removeItem(itemId);
+            return;
+        }
+        
+        // Update the quantity
+        cart[itemIndex].quantity = newQuantity;
+        
+        // Save to localStorage
+        localStorage.setItem('dosaCart', JSON.stringify(cart));
+        
+        // Update the display
+        renderCartItems();
+        renderCartSummary();
+    }
+}
+
+// Remove item from cart
+function removeItem(itemId) {
+    // Filter out the item
+    cart = cart.filter(item => item.id !== itemId);
+    
+    // Save to localStorage
+    localStorage.setItem('dosaCart', JSON.stringify(cart));
+    
+    // Check if cart is empty
+    if (cart.length === 0) {
+        showEmptyCart();
+        document.getElementById('checkoutBtn').disabled = true;
+    } else {
+        // Update the display
+        renderCartItems();
+        renderCartSummary();
+    }
+}
+
+// Handle checkout form submission
+function handleCheckout(event) {
+    // Prevent form submission
+    event.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const deliveryTime = document.getElementById('deliveryTime').value;
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    // Calculate order total
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax + DELIVERY_FEE;
+    
+    // Create order object
+    const order = {
+        customer: {
+            name,
+            phone,
+            email,
+            address
+        },
+        items: cart,
+        deliveryTime,
+        paymentMethod,
+        pricing: {
+            subtotal,
+            tax,
+            deliveryFee: DELIVERY_FEE,
+            total
+        },
+        orderDate: new Date().toISOString(),
+        orderNumber: generateOrderNumber()
+    };
+    
+    // In a real app, you would send this order to your server
+    // For now, we'll just save it to localStorage and show confirmation
+    localStorage.setItem('lastOrder', JSON.stringify(order));
+    
+    // Clear the cart
+    cart = [];
+    localStorage.setItem('dosaCart', JSON.stringify(cart));
+    
+    // Show confirmation
+    showOrderConfirmation(order);
+}
+
+// Generate random order number
+function generateOrderNumber() {
+    return 'DO-' + Date.now().toString().slice(-6) + '-' + Math.floor(Math.random() * 1000);
+}
+
+// Show order confirmation
+function showOrderConfirmation(order) {
+    // Replace the main content with confirmation message
+    const mainContent = document.querySelector('main');
+    
+    mainContent.innerHTML = `
+        <div class="page-title">
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your order, ${order.customer.name}</p>
+        </div>
+        
+        <div style="background-color: white; border-radius: 10px; padding: 2rem; box-shadow: 0 3px 10px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto;">
+            <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Order Details</h2>
+            
+            <p><strong>Order Number:</strong> ${order.orderNumber}</p>
+            <p><strong>Delivery Address:</strong> ${order.customer.address}</p>
+            <p><strong>Delivery Time:</strong> ${getDeliveryTimeText(order.deliveryTime)}</p>
+            <p><strong>Payment Method:</strong> ${getPaymentMethodText(order.paymentMethod)}</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Order Summary</h3>
+            
+            <div style="margin-bottom: 1rem;">
+                ${order.items.map(item => `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>${item.quantity} × ${item.name}</div>
+                        <div>₹${(item.price * item.quantity).toFixed(2)}</div>
+                    </div>
+                `).join('')}
+                
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>Subtotal</div>
+                        <div>₹${order.pricing.subtotal.toFixed(2)}</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>Tax</div>
+                        <div>₹${order.pricing.tax.toFixed(2)}</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>Delivery Fee</div>
+                        <div>₹${order.pricing.deliveryFee.toFixed(2)}</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 0.5rem;">
+                        <div>Total</div>
+                        <div>₹${order.pricing.total.toFixed(2)}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem; text-align: center;">
+                A confirmation email has been sent to ${order.customer.email}<br>
+                We'll notify you when your order is on the way!
+            </p>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button onclick="window.location.href='index.html'" style="background-color: var(--primary-color); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer;">
+                    Return to Menu
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Helper function to get delivery time text
+function getDeliveryTimeText(deliveryTime) {
+    switch (deliveryTime) {
+        case 'asap':
+            return 'As soon as possible';
+        case '30min':
+            return 'Within 30 minutes';
+        case '1hour':
+            return 'Within 1 hour';
+        case '2hours':
+            return 'Within 2 hours';
+        default:
+            return deliveryTime;
+    }
+}
+
+// Helper function to get payment method text
+function getPaymentMethodText(paymentMethod) {
+    switch (paymentMethod) {
+        case 'cash':
+            return 'Cash on Delivery';
+        case 'card':
+            return 'Credit/Debit Card';
+        case 'upi':
+            return 'UPI';
+        default:
+            return paymentMethod;
+    }
+}
+
+// Call initPage when the DOM is loaded
+document.addEventListener('DOMContentLoaded', initPage);
+
+</script>
+<script>
+    // Get the mobile toggle button and nav links elements
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    // Add click event listener to toggle mobile menu
+    mobileToggle.addEventListener('click', function() {
+        // Toggle the 'active' class on nav links
+        navLinks.classList.toggle('active');
+        
+        // Change the toggle icon based on menu state
+        if (navLinks.classList.contains('active')) {
+            mobileToggle.innerHTML = '✕'; // Close icon
+        } else {
+            mobileToggle.innerHTML = '☰'; // Menu icon
+        }
+    });
+    
+    // Close menu when clicking on a link (optional but recommended)
+    const menuLinks = document.querySelectorAll('.nav-links a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Only take action if the menu is open (has active class)
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+            }
+        });
+    });
+</script>
+</body>
+</html>
